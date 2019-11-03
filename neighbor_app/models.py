@@ -61,7 +61,10 @@ class Comment(models.Model):
    def __str__(self):
        return self.posted_by
 
-
+class Neighborhood(models.Model):
+    neighborhood_name=models.CharField(max_length=20)
+    def __str__(self):
+        return f'{self.neighborhood_name}'
 
 
 
