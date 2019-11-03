@@ -1,0 +1,76 @@
+{%extends 'base.html'%}
+{{block.super}}
+{% block content %}
+
+
+<style>
+  
+  .one{
+    width:100%;
+  } 
+  .three{
+    width:100%;
+  } 
+  .button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+} 
+ 
+ </style>
+
+
+<div class="one" style="width:100%">
+
+        <div class="col-md-2" style="width:30%;margin-left: 40%;height:20%;padding-bottom:5%;margin-top: 5%">
+          <a href="{%url 'new_post'%}" class="button">Upload your Project</a>
+        
+        </div>
+      <div style="width:100%;height:30%">
+          <img src="https://www.bandt.com.au/information/uploads/2018/10/iStock-939840782-1-1260x840.jpg" style="width:70%;height:10%;margin-left: 15%">
+      </div>
+
+          <div class="row">
+
+                    {% for x in images %}
+                
+                      <div data-toggle="modal" data-target="#{{x.id}}" style="width:69%;margin-left:30%" >
+                        <!--Display   images  -->
+                        <img class="img-responsive"style="width:50%;padding-top:5%" src="{{x.image.url}}" alt="">
+                      </div>
+                    
+                        <div  style="margin-left:30%;margin-top:2%">
+                                <div>
+                                  <p>Title:{{x.title}}</p> 
+                                <p>{{x.description}}</p>
+                                </div>
+                              
+                                <a href="{{x.link}}"> Visit This Site</a>
+                                <br>
+                                <a href="{% url 'rate' x.id %}"> vote</a>
+                                <br>
+                                <a href="{% url 'comment' x.id %}">Live Your Comment</a>
+                            
+                                {% for coment in x.comment_set.all %}
+                                <p>{{coment.comment}}</p>
+                                {% empty %}
+                                {% endfor %}
+                            
+                        
+                        </div>
+                              <hr>
+                        {%endfor%}
+              </div>
+      
+</div>
+
+
+{% endblock %}
+        

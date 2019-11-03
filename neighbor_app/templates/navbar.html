@@ -1,49 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-
-  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .navbar {
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    .navbar a {
+      float: left;
+      font-size: 16px;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+      font-size: 16px;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
+
+    .navbar a:hover,
+    .dropdown:hover .dropbtn {
+      background-color: rgb(138, 132, 132);
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #20c011;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: black;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
 </head>
+
 <body>
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'pictures' %}">HomePage</a> 
+
+  <div class="navbar" class="row"style="width:100%;height:50%">
+    <div class="col-md-2">
+    <a href="{%url 'image'%}">HomePage</a>
     </div>
-
-
-      <!-- Adding a search form  -->
-      <div class="col-sm-4 col-md-4 navbar-right">
-
-        <form class="navbar-form" role="search" action="{% url 'search_results' %}">
-
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search Categories" name="img">
-            <div class="input-group-btn">
-              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-            </div>
-          </div>
-
-        </form>
-      </div>
-      <!-- search form end -->
-      <!-- <div class="nav-item dropdown" style="float: right;">
-        <button class="btn btn-secondary dropdown-toggle" href="#"
-           id="navbarDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" style="font-family: 'Kodchasan', sans-serif; color: black"
-          aria-expanded="false">
-          Locations
-      </button>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          {% for locations in location %}
-          <a class="dropdown-item"  href="/location/{{locations.id}}">{{locations.location}}</a>
-          <div class="dropdown-divider">
-          {% endfor %}
-        </div>
-      </div>
-          </div> -->
+  <div class="col-md-2">
+    <a href="{%url 'profile' %}">Profile</a>
   </div>
-</nav>
+  
+  <div class="col-md-2">
+    <a href="/logout">Logout</a>
+  </div>
+ 
+
+
+
+        <div class="col-md-2">
+
+          <form class="navbar-form" role="search" action="{% url 'search_picture' %}">
+  
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search Picture" name="title">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div>
+            </div>
+  
+          </form>
+        </div>
+    
+
+
+
+  </div>
+
+ 
+  </div> 
+
+
+
 </body>
+
 </html>
+
+
+

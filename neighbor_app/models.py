@@ -1,49 +1,67 @@
 from django.db import models
+from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 # Create your models here.
 
-
-class Location(models.Model):
-    name = models.CharField(max_length =30)
-
-    def __str__(self):
-        return self.name
-
-    def save_location(self):
-        self.save()  
-
-    def delete_location(self):
-        self.delete() 
-
-    def update_location(self):
-        self.update() 
-
-class Category(models.Model):
-    name = models.CharField(max_length =30)
-
-    def __str__(self):
-        return self.name 
-
-    def save_category(self):
-        self.save()
-
-    def update_category(self):
-        self.update()
-    def delete_category(self):
-        self.delete()
-
+class Profile(models.Model):
+   user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+   profile_picture = models.ImageField(upload_to='images/')
+   bio = models.TextField(max_length=700)
+   name = models.CharField(max_length=200)
+   
+   def __str__(self):
+       return self.name
+   @classmethod
+   def search_profile(cls, username):
+       return cls.objects.filter(name__icontains=username)
+   def save_profile(self):
+       self.user
+   def delete_profile(self):
+       self.delete()
 
 class Image(models.Model):
-    img =  models.ImageField(upload_to = 'image/')
-    img_name = models.CharField(max_length =30)
-    img_description = models.TextField()
-    location = models.ForeignKey(Location)
-    category = models.ForeignKey(Category,db_column='name')
-  
+    image= models.ImageField(upload_to = 'image/')
+    title = models.CharField(max_length =30)
+    description = models.TextField()
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    comments= models.TextField()
+    link =  models.URLField(max_length=700)
+    design = models.IntegerField(choices=list(zip(range(0,11), range(0,11))), default=0)
+    usability = models.IntegerField(choices=list(zip(range(0,11), range(0,11))), default=0)
+    content = models.IntegerField(choices=list(zip(range(0,11), range(0,11))), default=0)
+    vote_submissions = models.IntegerField(default=0)
+
     def __str__(self):
-        return self.img_name
+        return self.title
+
+    def save_image(self):
+        self.save()
+    
+    def delete_image(self):
+        self.delete()
 
     @classmethod
-    def search_by_category(cls,search_term):
-        news = cls.objects.filter(category__name__icontains=search_term)
-        return news
+    def get_all_images(cls):
+       images=cls.objects.all().prefetch_related('comment_set')
+       return images
+
+    def total_likes(self):
+       self.likes.count()
+
+    @classmethod
+    def search_by_title(cls,search_term):
+        pic = cls.objects.filter(title__icontains=search_term)
+        return pic
+
+class Comment(models.Model):
+   posted_by=models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+   comment_pic=models.ForeignKey(Image,on_delete=models.CASCADE,null=True)
+   comment=models.CharField(max_length=20,null=True)
+   def __str__(self):
+       return self.posted_by
+
+
+
+
+
