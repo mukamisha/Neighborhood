@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+
+ {% block content %}
+
+ <div class="container" style="width:100%">
+
+   <div class="row">
+     <img style="width:30%;height:30%;padding-top:10%;margin-left:30%"src="{{image.img.url}}"  class="img-responsive" alt="">
+   </div>
+
+  <div class="row">
+     <h1 class="text-center">{{image.img_name}}</h1>
+  </div>
+ </div>
+
+ {% endblock %}
