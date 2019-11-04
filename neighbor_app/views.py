@@ -115,7 +115,8 @@ def search_picture(request):
 
 
 @login_required(login_url='/accounts/login/')
-
+def Post (request):
+    
 
 
 

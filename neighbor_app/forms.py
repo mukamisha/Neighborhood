@@ -4,8 +4,8 @@ from .models import Image,Profile,Comment
 
 class NewPostForm(forms.ModelForm):
     class Meta:
-        model = Image
-        exclude = ['profile','comments']
+        model = Post
+        exclude = ['posted_by']
 
 class ProfileForm(forms.ModelForm):
    class Meta:
@@ -18,8 +18,4 @@ class CommentForm(forms.ModelForm):
        model=Comment
        exclude=['comment_pic','posted_by']
 
-class PostForm(form.ModelForm):
-    class Meta:
-        model:Post
-        exclude=['posted_by']
 
