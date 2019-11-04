@@ -4,7 +4,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns=[
-    url('^$',views.images,name = 'image'),
+    url('^$',views.neighborhood,name = 'neighborhood'),
+    # url(r'^image',views.images,name = 'image'),
     url(r'^new/post$', views.new_post, name='new_post'),
     url(r'^profile', views.profile, name='profile'),
     url(r'^edit/profile', views.profile_edit, name='profile_edit'),

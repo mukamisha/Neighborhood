@@ -6,16 +6,15 @@ from .forms import NewPostForm,ProfileForm,CommentForm
 
 # Create your views here.
 
+@login_required(login_url='/accounts/login/')
+def neighborhood(request,):
+    neighbor= Neighborhood.objects.all()
+    return render(request, 'home.html',{'Images':neighbor})
 
 # @login_required(login_url='/accounts/login/')
 # def images(request,):
 #     image= Image.objects.all()
 #     return render(request, 'home.html',{'images':image})
-
-@login_required(login_url='/accounts/login/')
-def neighborhood(request,):
-    neighbor= Neighborhood.objects.all()
-    return render(request, 'home.html',{'Images':neighbor})
 
 
 @login_required(login_url='/accounts/login/')
