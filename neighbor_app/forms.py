@@ -18,3 +18,8 @@ class CommentForm(forms.ModelForm):
        model=Comment
        exclude=['comment_pic','posted_by']
 
+class PostForm(form.ModelForm):
+    class Meta:
+        model:Post
+        exclude=['posted_by']
+

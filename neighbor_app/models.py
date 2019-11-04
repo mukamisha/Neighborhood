@@ -61,5 +61,12 @@ class Neighborhood(models.Model):
     def __str__(self):
         return f'{self.neighborhood_name}'
 
+class Post(models.Model):
+    title=models.CharField(max_length=40)
+    post_description=HTMLField()
+    posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.title}'
 
 

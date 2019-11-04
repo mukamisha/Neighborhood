@@ -114,6 +114,10 @@ def search_picture(request):
         return render(request, 'search.html',{"message":message})
 
 
+@login_required(login_url='/accounts/login/')
+
+
+
 
 
 
