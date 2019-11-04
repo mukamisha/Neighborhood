@@ -7,7 +7,7 @@ from .forms import NewPostForm,ProfileForm,CommentForm
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
-def neighborhood(request):
+def index(request):
     neighbor= Neighborhood.objects.all()
     return render(request, 'home.html',{'Images':neighbor})
 
