@@ -116,7 +116,9 @@ def search_picture(request):
 
 @login_required(login_url='/accounts/login/')
 def Post (request):
-    
+    posts= Post.objects.all()
+    return render(request, 'neighborhood.html',{'posts':posts})
+
 
 
 
