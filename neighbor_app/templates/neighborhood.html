@@ -37,23 +37,23 @@
 
           <div class="row">
 
-                    {% for x in Images %}
+                    {% for m in posts %}
                 
-                      <!-- <div data-toggle="modal" data-target="#{{x.id}}" style="width:69%;margin-left:30%" > -->
-                        <!--Display   images  -->
-                        <!-- <img class="img-responsive"style="width:50%;padding-top:5%" src="{{x.neighborhood_name}}" alt="">
-                      </div> -->
+                      <div data-toggle="modal" data-target="#{{m.id}}" style="width:69%;margin-left:30%" > -->
+                        <!-- Display   images  -->
+                        <img class="img-responsive"style="width:50%;padding-top:5%" src="{{m.post_description}}" alt="">
+                      </div>
                     
                         <div  style="margin-left:30%;margin-top:2%">
                                 <div>
-                                  <!-- <p>Title:{{x.title}}</p>  -->
-                                <!-- <p>{{x.neighborhood_name}}</p> -->
+                                  <p>Title:{{m.title}}</p> 
+                                <p>{{m.posted_by}}</p>
                                 </div>
                               
                                 <!-- <a href="{{x.link}}"> Visit This Site</a> -->
-                                <br>
+                                <!-- <br>
                                 <a href="{% url 'neighborhood'  %}"> {{x.neighborhood_name}}</a>
-                                <br>
+                                <br> -->
                                 <!-- <a href="{% url 'comment' x.id %}">Live Your Comment</a>
                              -->
                                 <!-- {% for coment in x.comment_set.all %}
