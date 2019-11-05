@@ -1,58 +1,55 @@
-{%extends 'base.html'%}
+
+{% extends 'base.html' %}
 {{block.super}}
 {% block content %}
 
 
-<style>
-  
-  .one{
-    width:100%;
-  } 
-  .three{
-    width:100%;
-  } 
- 
- </style>
+<!-- Admin Dashboard -->
+{% if request.user.id == 1 %}
+<div class="container">
+  <h3 class="center-align">Neighborhoods Available</h3>
+  <div class="row">
+    {% for neighborhood in neighborhoods %}
+    <a href="{% url 'neighborhood' neighborhood.id %}" class='black-text'>
+      <div class="col s12 m12 l6 xl6">
+        <div class="divider"></div>
+        <div class="section">
+          <h4 class="center-align"><i class="material-icons">home</i>{{neighborhood.neighborhood_name}}</h4>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
 
+    <!-- Neighborhood Form Modal -->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4 class="center-align">Create Neighborhood</h4>
+        <div class="divider"></div>
+        <form action="{% url 'index' %}" method="POST">
+          {% csrf_token %}
+          {% bootstrap_form form%}
+          <button class="btn" style="background-color:#ee6e73;" type="submit" name="action">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
 
-
-      <!-- <div style="width:100%;height:30%">
-          <img src="https://www.bandt.com.au/information/uploads/2018/10/iStock-939840782-1-1260x840.jpg" style="width:70%;height:10%;margin-left: 15%">
-      </div> -->
-
-          <div class="row">
-
-                    {% for x in posts %}
-                
-                      <div data-toggle="modal" data-target="#{{x.id}}" style="width:69%;margin-left:30%" > 
-                        <!-- Display   images  -->
-                        <hr>
-                        {{x.title}}
-                        {{x.post_description}}
-                       {{x.posted_by}}
-                        <!-- <img class="img-responsive"style="width:50%;padding-top:5%" src="{{x.new_post}}" alt=""> -->
-                      </div>
-                    {%endfor%}
-                    
-                        <div  style="margin-left:30%;margin-top:2%">
-                                  
-                                {% for x in neighbor %}
-                                <div data-toggle="modal" data-target="#{{x.id}}" style="width:69%;margin-left:30%" > 
-                                  <!-- Display   images  -->
-                                  <hr>
-                                  <a href="{% url 'neighb' x.id  %}"> {{x.neighborhood_name}}</a>
-                                
-                                </div>
-                                <br>
-                               
-                                <br>
-                                {%endfor%}
-                        </div>
-                              <hr>      
-          </div>
-      
-
-
-
+<!-- Intro Dashboard -->
+{% if user.neighborhood == null and request.user.id != 1 %}
+<div class="container">
+  <h3 class="center-align">What Neighborhood Do You Belong To?</h3>
+  <div class="row">
+    {% for neighborhood in neighborhoods %}
+    <div class="divider"></div>
+    <div class="section">
+      <a href="{% url 'neighborhood' neighborhood.id %}" class="btn-floating" style="background-color:#ee6e73!important;"><i class="material-icons">check</i></a>
+      <h4 class="center-align"><i class="material-icons">home</i>{{neighborhood.neighborhood_name}}</h4>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
 {% endblock %}
         

@@ -8,9 +8,6 @@ from .forms import NewPostForm,ProfileForm,NeighborhoodForm
 
 @login_required(login_url='/accounts/login/')
 def home(request):
-    if not request.user.is_authenticated:
-        return redirect('signout')
-    else:
         if request.user.id == 1:
             if request.method == 'POST':
                 form = NeighborhoodForm(request.POST)
