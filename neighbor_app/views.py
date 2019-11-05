@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse
-from . models import Image,Neighborhood,Post
+from . models import Image,Neighborhood,Post,User
 from django.contrib.auth.decorators import login_required
 from .forms import NewPostForm,ProfileForm,NeighborhoodForm
 
@@ -8,9 +8,20 @@ from .forms import NewPostForm,ProfileForm,NeighborhoodForm
 
 @login_required(login_url='/accounts/login/')
 def home(request):
-    neighbor= Neighborhood.objects.all()
-    # posts=Post.objects[].all()
-    return render(request, 'home.html',{'neighbor':neighbor,'posts':posts})
+    if not request.user.is_authenticated:
+        return redirect('signout')
+    else:
+        if request.user.id == 1:
+            if request.method == 'POST':
+                form = NeighborhoodForm(request.POST)
+                if form.is_valid():
+                    neighborhood = Neighborhood(neighborhood_name=request.POST['neighborhood_name'],neighborhood_location=request.POST['neighborhood_location'])
+                    neighborhood.save()
+                return redirect('index')
+            else:
+                form = NeighborhoodForm()
+            neighborhoods = Neighborhood.objects.all()
+            return render(request,'home.html',{'neighborhoods':neighborhoods,'form':form})
 
 
 
