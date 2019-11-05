@@ -17,6 +17,18 @@ def index(request):
 #     return render(request, 'home.html',{'images':image})
 
 
+
+@login_required(login_url='/accounts/login/')
+def neighborhood(request,neighborhood_id):
+    if request.user.id == 1:
+        current_user=request.user
+        neighbors= NeighborHood.objects.get(id=neighborhood_id)
+        # print(neighbors)
+        # biz=BusinessClass.objects.filter(neighborhood=neighbors.id).all()
+        posts=Post.objects.filter(neighborhood=neighbors.id).all()
+        # profile=Profile.objects.filter(id=current_user.id).first()
+        # return render(request,'neighborhood.html',{'business':biz,'neighbors':neighbors,'neighborhood_id':neighborhood_id})
+        return render(request,'neighborhood.html',{'neighbors':neighbors,'neighborhood_id':neighborhood_id,'posts':posts})
 @login_required(login_url='/accounts/login/')
 def new_post(request):
     current_user = request.user
@@ -26,7 +38,7 @@ def new_post(request):
             post = form.save(commit=False)
             post.user = current_user
             post.save()
-        return redirect('image')
+        return redirect('neighborhood')
 
     else:
         form = NewPostForm()
