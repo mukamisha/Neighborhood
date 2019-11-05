@@ -7,7 +7,7 @@ from .forms import NewPostForm,ProfileForm,NeighborhoodForm
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
-def index(request):
+def home(request):
     neighbor= Neighborhood.objects.all()
     # posts=Post.objects[].all()
     return render(request, 'home.html',{'neighbor':neighbor,'posts':posts})
