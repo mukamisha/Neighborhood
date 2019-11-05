@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from tinymce.models import HTMLField
 
+
 # Create your models here.
 
 class Profile(models.Model):
@@ -49,21 +50,34 @@ class Image(models.Model):
         pic = cls.objects.filter(title__icontains=search_term)
         return pic
 
-class Comment(models.Model):
-   posted_by=models.ForeignKey(User, on_delete=models.CASCADE,null=True)
-   comment_pic=models.ForeignKey(Image,on_delete=models.CASCADE,null=True)
-   comment=models.CharField(max_length=20,null=True)
-   def __str__(self):
-       return self.posted_by
 
 class Neighborhood(models.Model):
     neighborhood_name=models.CharField(max_length=20)
+
+    def create_neighborhood(self):
+        self.save()
+
+    def delete_neighborhood(self):
+        self.delete()
+
+    @classmethod
+    def find_neighborhood(cls,neighborhood_id):
+        neighborhood = cls.objects.get(id=neighborhood_id)
+        return neighborhood
+
+    def update_neighborhood(self,name):
+        self.name = name
+        self.save()
+
+
     def __str__(self):
         return f'{self.neighborhood_name}'
 
+    
+
 class Post(models.Model):
     title=models.CharField(max_length=40)
-    post_description=HTMLField()
+    post_description=models.TextField(max_length=60)
     posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):

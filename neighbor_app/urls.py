@@ -7,11 +7,11 @@ urlpatterns=[
     url(r'^$',views.index,name = 'index'),
     # url(r'^image',views.images,name = 'image'),
     url(r'^new/post$', views.new_post, name='new_post'),
-    url(r'^neighborhood/(\d+)', views.neighborhood, name='neighborhood'),
+    url(r'^neighborhood/(\d+)',views.neighborhood,name='neighborhood'),
     url(r'^profile', views.profile, name='profile'),
     url(r'^edit/profile', views.profile_edit, name='profile_edit'),
-    url(r'^comment/(\d+)', views.comment, name='comment'),
-    url(r'rate/(\d+)', views.rate, name='rate'),
+   
+  
     url(r'^search/', views.search_picture, name='search_picture'),
  
     

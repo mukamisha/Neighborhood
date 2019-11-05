@@ -1,34 +1,31 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse
-from . models import Image,Neighborhood
+from . models import Image,Neighborhood,Post
 from django.contrib.auth.decorators import login_required
-from .forms import NewPostForm,ProfileForm,CommentForm
+from .forms import NewPostForm,ProfileForm
 
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
 def index(request):
     neighbor= Neighborhood.objects.all()
-    return render(request, 'home.html',{'Images':neighbor})
+    # posts=Post.objects[].all()
+    return render(request, 'home.html',{'neighbor':neighbor,'posts':posts})
 
-# @login_required(login_url='/accounts/login/')
-# def images(request,):
-#     image= Image.objects.all()
-#     return render(request, 'home.html',{'images':image})
 
 
 
 @login_required(login_url='/accounts/login/')
 def neighborhood(request,neighborhood_id):
-    if request.user.id == 1:
-        current_user=request.user
-        neighbors= NeighborHood.objects.get(id=neighborhood_id)
-        # print(neighbors)
-        # biz=BusinessClass.objects.filter(neighborhood=neighbors.id).all()
-        posts=Post.objects.filter(neighborhood=neighbors.id).all()
-        # profile=Profile.objects.filter(id=current_user.id).first()
-        # return render(request,'neighborhood.html',{'business':biz,'neighbors':neighbors,'neighborhood_id':neighborhood_id})
-        return render(request,'neighborhood.html',{'neighbors':neighbors,'neighborhood_id':neighborhood_id,'posts':posts})
+    
+    current_user=request.user
+    neighbors= Neighborhood.objects.get(id=neighborhood_id)
+    # print(neighbors)
+    # biz=BusinessClass.objects.filter(neighborhood=neighbors.id).all()
+    posts=Post.objects.filter(title=neighbors.id).all()
+    # profile=Profile.objects.filter(id=current_user.id).first()
+    # return render(request,'neighborhood.html',{'business':biz,'neighbors':neighbors,'neighborhood_id':neighborhood_id})
+    return render(request,'neighborhood.html',{'neighbors':neighbors,'neighborhood_id':neighborhood_id,'posts':posts})
 @login_required(login_url='/accounts/login/')
 def new_post(request):
     current_user = request.user
@@ -38,7 +35,7 @@ def new_post(request):
             post = form.save(commit=False)
             post.user = current_user
             post.save()
-        return redirect('neighborhood')
+        return redirect('index')
 
     else:
         form = NewPostForm()
@@ -66,52 +63,6 @@ def profile_edit(request):
    return render(request,'update.html',{"form":form})
 
 @login_required(login_url='/accounts/login/')
-def comment(request,image_id):
-   current_user=request.user
-   if request.method=='POST':
-       image_detail=Image.objects.filter(id=image_id).first()
-
-       form=CommentForm(request.POST,request.FILES)
-       if form.is_valid():
-           comment=form.save(commit=False)
-           comment.posted_by=current_user
-           comment.comment_pic=image_detail
-           comment.save()
-       return redirect('image')
-   else:
-       form=CommentForm()
-   return render(request,'comment.html',{"form":form,"image_id":image_id})
-
-@login_required(login_url='/accounts/login/')
-def rate(request,image_id):
-
-       rate = Image.objects.filter(id=image_id).first()
-       average_score = round(((rate.design + rate.usability + rate.content)/3),2)
-       if request.method == 'POST':
-           rate_form = RateForm(request.POST)
-           if rate_form.is_valid():
-               rate.vote_submissions+=1
-               if rate.design == 0:
-                   rate.design = int(request.POST['design'])
-               else:
-                   rate.design = (rate.design + int(request.POST['design']))/2
-               if rate.usability == 0:
-                   rate.usability = int(request.POST['usability'])
-               else:
-                   rate.usability = (rate.usability + int(request.POST['usability']))/2
-               if rate.content == 0:
-                   rate.content = int(request.POST['content'])
-               else:
-                   rate.content = (rate.content + int(request.POST['usability']))/2
-               rate.save()
-               return redirect('rate', image_id)
-       else:
-           rate_form = RateForm()
-
-           return render(request,'rate.html',{"rate_form":rate_form,"rate":rate,"average_score":average_score})
-
-
-@login_required(login_url='/accounts/login/')
 def search_picture(request):
 
     if 'title' in request.GET and request.GET["title"]:
@@ -125,11 +76,6 @@ def search_picture(request):
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
 
-
-# @login_required(login_url='/accounts/login/')
-# def Post (request):
-#     posts= Post.objects.all()
-#     return render(request, 'neighborhood.html',{'posts':posts})
 
 
 

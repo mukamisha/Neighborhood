@@ -22,37 +22,37 @@
 
           <div class="row">
 
-                    {% for x in Images %}
+                    {% for x in posts %}
                 
-                      <!-- <div data-toggle="modal" data-target="#{{x.id}}" style="width:69%;margin-left:30%" > -->
-                        <!--Display   images  -->
-                        <!-- <img class="img-responsive"style="width:50%;padding-top:5%" src="{{x.neighborhood_name}}" alt="">
-                      </div> -->
+                      <div data-toggle="modal" data-target="#{{x.id}}" style="width:69%;margin-left:30%" > 
+                        <!-- Display   images  -->
+                        <hr>
+                        {{x.title}}
+                        {{x.post_description}}
+                       {{x.posted_by}}
+                        <!-- <img class="img-responsive"style="width:50%;padding-top:5%" src="{{x.new_post}}" alt=""> -->
+                      </div>
+                    {%endfor%}
                     
                         <div  style="margin-left:30%;margin-top:2%">
-                                <div>
-                                  <!-- <p>Title:{{x.title}}</p>  -->
-                                <!-- <p>{{x.neighborhood_name}}</p> -->
+                                  
+                                {% for x in neighbor %}
+                                <div data-toggle="modal" data-target="#{{x.id}}" style="width:69%;margin-left:30%" > 
+                                  <!-- Display   images  -->
+                                  <hr>
+                                  <a href="{% url 'neighb' x.id  %}"> {{x.neighborhood_name}}</a>
+                                
                                 </div>
-                              
-                                <!-- <a href="{{x.link}}"> Visit This Site</a> -->
                                 <br>
-                                <a href="{% url 'neighborhood'  %}"> {{x.neighborhood_name}}</a>
+                               
                                 <br>
-                                <!-- <a href="{% url 'comment' x.id %}">Live Your Comment</a>
-                             -->
-                                <!-- {% for coment in x.comment_set.all %}
-                                <p>{{coment.comment}}</p>
-                                {% empty %}
-                                {% endfor %} -->
-                            
-                        
+                                {%endfor%}
                         </div>
                               <hr>
-                        {%endfor%}
+                        
               </div>
       
-</div>
+
 
 
 {% endblock %}
