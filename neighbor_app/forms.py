@@ -1,5 +1,5 @@
 from django import forms
-from .models import Image,Profile,Post,Neighborhood
+from .models import Image,Profile,Post,Neighborhood,Business
 
 
 class NewPostForm(forms.ModelForm):
@@ -16,5 +16,10 @@ class ProfileForm(forms.ModelForm):
 class NeighborhoodForm(forms.ModelForm):
     class Meta:
         model = Neighborhood
-        fields = ('neighborhood_name',)
+        fields = ('neighborhood_name')
+class BusinessForm(forms.ModelForm):
+    class Meta:
+        model:Business
+        fields=('business_name')
+    
 

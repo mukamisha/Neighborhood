@@ -20,8 +20,10 @@ def neighborhood(request,neighborhood_id):
     current_user=request.user
     neighbors= Neighborhood.objects.get(id=neighborhood_id)
     posts=Post.objects.filter(neighborhoods=neighbors.id).all()
+    businesseses=Business.objects.filter(neighborhoods=neighbors.id).all()
+    return render(request,'neighborhood.html',{'neighbors':neighbors,'neighborhood_id':neighborhood_id,'posts':posts,'businesseses',businesseses})
 
-    return render(request,'neighborhood.html',{'neighbors':neighbors,'neighborhood_id':neighborhood_id,'posts':posts})
+
 @login_required(login_url='/accounts/login/')
 def new_post(request,neighborhood_id):
     current_user = request.user
@@ -32,6 +34,7 @@ def new_post(request,neighborhood_id):
             post = form.save(commit=False)
             post.posted_by = current_user
             post.neighborhoods=neighbors
+
             post.save()
         return redirect('neighborhood', neighborhood_id)
 
@@ -39,7 +42,25 @@ def new_post(request,neighborhood_id):
         form = NewPostForm()
     return render(request, 'new_post.html', {"form": form, "neighborhood_id": neighborhood_id})
 
-neighborhood
+    @login_required(login_url='/accounts/login/')
+def add_business(request,neighborhood_id):
+    current_user = request.user
+    businesses= Business.objects.get(id=neighborhood_id)
+    if request.method == 'POST':
+        form = BusinessForm(request.POST, request.FILES)
+        if form.is_valid():
+            biz = form.save(commit=False)
+            biz.posted_by = current_user
+            biz.neighborhoods=businesses
+
+            post.save()
+        return redirect('neighborhood', neighborhood_id)
+
+    else:
+        form = BusinessForm()
+    return render(request, 'new_post.html', {"form": form, "neighborhood_id": neighborhood_id})
+
+
 @login_required(login_url='/accounts/login/')
 def profile(request, username=None):
     current_user = request.user

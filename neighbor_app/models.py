@@ -83,9 +83,10 @@ class Post(models.Model):
 
     
 class Business(models.Model):
-    business_name=models.CharField(max_length=40)
+    business_name=models.CharField(max_length=20)
     posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
     neighborhoods=models.ForeignKey(Neighborhood)
+    email_adress=models.EmailField()
 
     def __str__(self):
         return f'{self.business_name}'
