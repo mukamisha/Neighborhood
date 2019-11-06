@@ -5,22 +5,6 @@ from tinymce.models import HTMLField
 
 # Create your models here.
 
-class Profile(models.Model):
-   user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-   profile_picture = models.ImageField(upload_to='images/')
-   bio = models.TextField(max_length=700)
-   name = models.CharField(max_length=200)
-   
-   def __str__(self):
-       return self.name
-   @classmethod
-   def search_profile(cls, username):
-       return cls.objects.filter(name__icontains=username)
-   def save_profile(self):
-       self.user
-   def delete_profile(self):
-       self.delete()
-
 class Image(models.Model):
     image= models.ImageField(upload_to = 'image/')
     title = models.CharField(max_length =30)
@@ -81,7 +65,8 @@ class Post(models.Model):
         return f'{self.title}'
 
 
-    
+
+
 class Business(models.Model):
     business_name=models.CharField(max_length=20)
     posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
@@ -93,5 +78,19 @@ class Business(models.Model):
 
 
 
+class Profile(models.Model):
+   user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+   profile_picture = models.ImageField(upload_to='images/')
+   name = models.CharField(max_length=200)
+   neighborhoods=models.ForeignKey(Neighborhood)
+   def __str__(self):
+       return self.name
+   @classmethod
+   def search_profile(cls, username):
+       return cls.objects.filter(name__icontains=username)
+   def save_profile(self):
+       self.user
+   def delete_profile(self):
+       self.delete()
 
 
