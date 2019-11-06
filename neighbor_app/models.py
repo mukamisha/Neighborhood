@@ -80,7 +80,6 @@ class Business(models.Model):
 
 class Profile(models.Model):
    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-   profile_picture = models.ImageField(upload_to='images/')
    name = models.CharField(max_length=200)
    neighborhoods=models.ForeignKey(Neighborhood)
    def __str__(self):

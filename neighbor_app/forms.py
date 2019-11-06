@@ -10,7 +10,7 @@ class NewPostForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
    class Meta:
        model=Profile
-       fields=['profile_picture','name']
+       fields=['name']
        exclude=['user']
 
 class NeighborhoodForm(forms.ModelForm):

@@ -61,27 +61,28 @@ def add_business(request,neighborhood_id):
 
    
 @login_required(login_url='/accounts/login/')
-def profile(request,neighborhood_id):
+def profile(request):
     
     current_user=request.user
     profile=Profile.objects.filter(user=current_user).first()
-    return render(request,'profile.html',{'neighbors':neighbors,'neighborhood_id':neighborhood_id,'posts':posts,'businesseses':businesseses})
+    return render(request,'profile.html',{'profile':profile,"current_user":current_user})
 
 # a function to get the profile
 @login_required(login_url='/accounts/login/')
 def add_profile(request):
     current_user = request.user
+    profile=Profile.objects.filter(user=current_user).first()
     if request.method =='POST':
         form = ProfileForm(request.POST,request.FILES)
         if form.is_valid():
             profile = form.save(commit=False)
-            profile.posted_by = current_user
+            profile.user = current_user
             profile.save()
         return redirect('profile')
 
     else:
         form = ProfileForm()
-    return render(request, 'add_profile.html', {"form": form})
+    return render(request, 'add_profile.html', {"form": form,'profile':profile})
 
     
 
