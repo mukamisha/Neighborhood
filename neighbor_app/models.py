@@ -37,10 +37,6 @@ class Image(models.Model):
     def delete_image(self):
         self.delete()
 
-    @classmethod
-    def get_all_images(cls):
-       images=cls.objects.all().prefetch_related('comment_set')
-       return images
 
     def total_likes(self):
        self.likes.count()
@@ -77,10 +73,24 @@ class Neighborhood(models.Model):
 
 class Post(models.Model):
     title=models.CharField(max_length=40)
-    post_description=models.TextField(max_length=60)
+    post_description=models.TextField(max_length=1000000)
     posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
+    neighborhoods=models.ForeignKey(Neighborhood)
 
     def __str__(self):
         return f'{self.title}'
+
+
+    
+class Business(models.Model):
+    business_name=models.CharField(max_length=40)
+    posted_by=models.ForeignKey(User,on_delete=models.CASCADE)
+    neighborhoods=models.ForeignKey(Neighborhood)
+
+    def __str__(self):
+        return f'{self.business_name}'
+
+
+
 
 

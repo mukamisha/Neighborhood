@@ -5,7 +5,7 @@ from .models import Image,Profile,Post,Neighborhood
 class NewPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        exclude = ['']
+        exclude = ['posted_by','neighborhoods']
 
 class ProfileForm(forms.ModelForm):
    class Meta:

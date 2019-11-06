@@ -3,53 +3,43 @@ from django.http  import HttpResponse
 from . models import Image,Neighborhood,Post,User
 from django.contrib.auth.decorators import login_required
 from .forms import NewPostForm,ProfileForm,NeighborhoodForm
+from django.contrib.auth.forms import AuthenticationForm
+
 
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
 def home(request):
-        if request.user.id == 1:
-            if request.method == 'POST':
-                form = NeighborhoodForm(request.POST)
-                if form.is_valid():
-                    neighborhood = Neighborhood(neighborhood_name=request.POST['neighborhood_name'],neighborhood_location=request.POST['neighborhood_location'])
-                    neighborhood.save()
-                return redirect('index')
-            else:
-                form = NeighborhoodForm()
-            neighborhoods = Neighborhood.objects.all()
-            return render(request,'home.html',{'neighborhoods':neighborhoods,'form':form})
+    neighborhood= Neighborhood.objects.all()
+    return render(request, 'home.html',{'neighborhood':neighborhood})
 
-
-
-
+   
 @login_required(login_url='/accounts/login/')
 def neighborhood(request,neighborhood_id):
     
     current_user=request.user
     neighbors= Neighborhood.objects.get(id=neighborhood_id)
-    # print(neighbors)
-    # biz=BusinessClass.objects.filter(neighborhood=neighbors.id).all()
-    posts=Post.objects.filter(title=neighbors.id).all()
-    # profile=Profile.objects.filter(id=current_user.id).first()
-    # return render(request,'neighborhood.html',{'business':biz,'neighbors':neighbors,'neighborhood_id':neighborhood_id})
+    posts=Post.objects.filter(neighborhoods=neighbors.id).all()
+
     return render(request,'neighborhood.html',{'neighbors':neighbors,'neighborhood_id':neighborhood_id,'posts':posts})
 @login_required(login_url='/accounts/login/')
-def new_post(request):
+def new_post(request,neighborhood_id):
     current_user = request.user
+    neighbors= Neighborhood.objects.get(id=neighborhood_id)
     if request.method == 'POST':
         form = NewPostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
-            post.user = current_user
+            post.posted_by = current_user
+            post.neighborhoods=neighbors
             post.save()
-        return redirect('index')
+        return redirect('neighborhood', neighborhood_id)
 
     else:
         form = NewPostForm()
-    return render(request, 'new_post.html', {"form": form})
+    return render(request, 'new_post.html', {"form": form, "neighborhood_id": neighborhood_id})
 
-
+neighborhood
 @login_required(login_url='/accounts/login/')
 def profile(request, username=None):
     current_user = request.user
