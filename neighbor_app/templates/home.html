@@ -2,39 +2,45 @@
 {{block.super}}
 {% block content %}
 <style>
-.one{
-      background-image: url("https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiH9Ljf3NblAhWB4IUKHWV0BkAQjRx6BAgBEAQ&url=https%3A%2F%2Fwallpapercave.com%2Fluxury-house-wallpapers&psig=AOvVaw3s-4-sv7BSfFB57bbW73T2&ust=1573168788750925");
-      background-size:cover;
-      background-repeat: no-repeat;
+.container{
+background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6),rgba(0,0,0,0.6)) ,url('https://wallpapercave.com/wp/wp2124403.jpg');
+background-size: cover;
+background-repeat: no-repeat;
+width:100%;
+height:800px;
+margin-top: 0%;
+
+
+
 }
-
-
-
+.button {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+} 
 </style>
 
 
 
-<div class="one" style="width:100%;height:100%;font-family: 'ZCOOL XiaoWei', serif;font-size:16px">
-
-      
-          <div class="row">
-
-                    {% for x in neighborhood %}
-                
-                 
-                    
-                        <div  style="margin-left:30%;margin-top:2%">
-                          
-                                <a href="{% url 'neighborhood' x.id %}">{{x.neighborhood_name}}</a>
-                                <br>
-                               
-                            
-                        
-                        </div>
-                              <hr>
-                        {%endfor%}
-              </div>
-      
+<div class="container">
+      <div class="two" style="font-family: 'ZCOOL XiaoWei', serif;font-size:16px;color:black;width:100%;height: 800px">
+            <div class="row" style="width:100%">
+                        {% for x in neighborhood %}
+                              <div  style="margin-left:30%;width:5%;margin-top:10%">
+                                    <a style="color:white" href="{% url 'neighborhood' x.id %}" class="button">{{x.neighborhood_name}}</a>
+                                   
+                              </div>
+                                   
+                              {%endfor%}
+            </div>      
+      </div>
 </div>
 
 

@@ -14,7 +14,7 @@
 <body>
 <div class="container" style="background-color:#fff;">
     <div class="row">
- <form  action="{%url 'profile_edit'%}" method="post" enctype="multipart/form-data">
+ <form  action="{%url 'profile'%}" method="post" enctype="multipart/form-data">
    {%csrf_token%}
    {% bootstrap_form form%}
    <input id="id_myfield" type="submit" class="btn btn-success btn-lg" value="Post">

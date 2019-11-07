@@ -9,8 +9,8 @@ urlpatterns=[
     url(r'^neighborhood/(\d+)',views.neighborhood,name='neighborhood'),
     url(r'^business/(\d+)',views.add_business,name='add_business'),
     url(r'^profile', views.profile, name='profile'),
-    url(r'^edit/profile', views.profile_edit, name='profile_edit'),
-    url(r'^search/', views.search_picture, name='search_picture'),
+    url(r'^edit/profile', views.add_profile, name='add_profile'),
+    url(r'^search/', views.search_business, name='search_business'),
  
 ]
 if settings.DEBUG:

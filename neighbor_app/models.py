@@ -5,31 +5,6 @@ from tinymce.models import HTMLField
 
 # Create your models here.
 
-class Image(models.Model):
-    image= models.ImageField(upload_to = 'image/')
-    title = models.CharField(max_length =30)
-    description = models.TextField()
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-   
-
-    def __str__(self):
-        return self.title
-
-    def save_image(self):
-        self.save()
-    
-    def delete_image(self):
-        self.delete()
-
-
-    def total_likes(self):
-       self.likes.count()
-
-    @classmethod
-    def search_by_title(cls,search_term):
-        pic = cls.objects.filter(title__icontains=search_term)
-        return pic
-
 
 class Neighborhood(models.Model):
     neighborhood_name=models.CharField(max_length=20)
@@ -75,6 +50,11 @@ class Business(models.Model):
 
     def __str__(self):
         return f'{self.business_name}'
+
+    @classmethod
+    def search_by_name(cls,search_term):
+        business_name = cls.objects.filter(business_name__icontains=search_term)
+        return business_name
 
 
 
